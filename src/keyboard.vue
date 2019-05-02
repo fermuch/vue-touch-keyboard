@@ -12,6 +12,8 @@
 	import Layouts from "./layouts";
 	import isString from "lodash/isString";
 	import isObject from "lodash/isObject";
+	const mainWindow = require('electron').remote.getCurrentWindow();
+	const mainWindowContents = mainWindow.webContents;
 
 	export default {
 		props: {
@@ -173,9 +175,7 @@
 			},
 
 			insertChar(caret, text, ch) {
-				text = text.substr(0, caret.start) + ch.toString() + text.substr(caret.start);
-				caret.start += ch.length;
-				caret.end = caret.start;
+				mainWindowContents.sendInputEvent({keyCode: 'A', type: 'char'});
 				return text;
 			},
 
@@ -235,16 +235,7 @@
 
 				if (addChar) {
 					if (this.input.maxLength <= 0 || text.length < this.input.maxLength) {
-						if (this.options.useKbEvents) {
-							let e = document.createEvent("Event"); 
-							e.initEvent("keydown", true, true);
-							e.which = e.keyCode = addChar.charCodeAt();
-							if (this.input.dispatchEvent(e)) {
-								text = this.insertChar(caret, text, addChar);
-							}
-						} else {
-							text = this.insertChar(caret, text, addChar);
-						}
+						text = this.insertChar(caret, text, addChar);
 					} 
 
 					if (this.currentKeySet == "shifted")
