@@ -168,14 +168,13 @@
 			},
 
 			backspace(caret, text) {
-				text = text.substring(0, caret.start - 1) + text.substring(caret.start);
-				caret.start -= 1;
-				caret.end = caret.start;
+				mainWindowContents.sendInputEvent({type: "keyDown", keyCode: '\u0008'});
+				mainWindowContents.sendInputEvent({type: "keyUp", keyCode: '\u0008'});
 				return text;
 			},
 
 			insertChar(caret, text, ch) {
-				mainWindowContents.sendInputEvent({keyCode: 'A', type: 'char'});
+				mainWindowContents.sendInputEvent({keyCode: ch, type: 'char'});
 				return text;
 			},
 
