@@ -269,8 +269,6 @@
 				// trigger 'input' Event
 				this.input.dispatchEvent(new Event("input", { bubbles: true }));
 
-				this.input.dispatchEvent(document.createEvent('HTMLEvents').initEvent('input', true, false));
-
 			},
 			
 			setFocusToInput(caret) {
