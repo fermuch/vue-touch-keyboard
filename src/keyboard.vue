@@ -253,9 +253,6 @@
 
 				this.input.value = text;
 				this.setFocusToInput(caret);
-				if (this.input._valueTracker && this.input._valueTracker.setValue) {
-					this.input._valueTracker.setValue(text);
-				}
 
 				if (this.change)
 					this.change(text, addChar);
